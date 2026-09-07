@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- MCC.Foundation.Guardrails 1.0.1 pulls ZeroAlloc generators that target Roslyn 5.3; the repo SDK ships 4.14. -->
+    <NoWarn>$(NoWarn);CS9057</NoWarn>
+  </PropertyGroup>
+</Project>

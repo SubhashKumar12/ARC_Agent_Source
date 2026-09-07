@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+appsettings.*.local.json
+secrets.json
+.idea/
+*.nupkg
+TestResults/
+artifacts/

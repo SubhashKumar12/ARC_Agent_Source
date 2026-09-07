@@ -1,0 +1,39 @@
+@ARC.Api_HostAddress = http://localhost:5187
+
+GET {{ARC.Api_HostAddress}}/health
+Accept: application/json
+
+###
+
+GET {{ARC.Api_HostAddress}}/v1/cycles/2026-08/dashboard
+X-Arc-Upn: depot.manager@paintco.example
+X-Arc-Role: DepotManager
+X-Arc-Depot: BLR
+
+###
+
+POST {{ARC.Api_HostAddress}}/v1/gates/gate_depot_manager/decisions
+Content-Type: application/json
+X-Arc-Upn: depot.manager@paintco.example
+X-Arc-Role: DepotManager
+X-Arc-Depot: BLR
+
+{
+  "cycleId": "2026-08",
+  "dealerUrn": "dealer-1",
+  "decision": "Approved",
+  "reason": "Exposure reviewed."
+}
+
+###
+
+POST {{ARC.Api_HostAddress}}/v1/insights/nlq
+Content-Type: application/json
+X-Arc-Upn: finance@paintco.example
+X-Arc-Role: Finance
+
+{
+  "cycleId": "2026-08",
+  "region": "South",
+  "question": "Which dealers are waiting on depot manager?"
+}

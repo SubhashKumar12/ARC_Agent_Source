@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "OdosCycleSchedule": "0 0 0 1 * *",
+    "PtpChaseSchedule": "0 0 6 * * *",
+    "CycleFanOutQueue": "arc-cycle-fanout",
+    "GateResumeQueue": "arc-gate-resume",
+    "ServiceBusConnection": "",
+    "ArcHost:DefaultRunMode": "Shadow"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Shadow demo (all)": {
+      "commandName": "Project",
+      "commandLineArgs": "all",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "S1 only": {
+      "commandName": "Project",
+      "commandLineArgs": "S1",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "ODOS SQL check": {
+      "commandName": "Project",
+      "commandLineArgs": "sql-check --year 2026 --month 07",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "ODOS dry run": {
+      "commandName": "Project",
+      "commandLineArgs": "odos-dry-run --year 2026 --month 07",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

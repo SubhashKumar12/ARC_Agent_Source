@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "_comment": "ARC Azure DEV parameters. Contains NO secrets. Entra admin identity is supplied on the command line at deploy time.",
+  "_policyNotes": [
+    "Subscription npedureka-1709415296501 assigns policy Edureka_AZ / Edureka_AZ_AllowOnlyCoreServices (effect: deny).",
+    "Microsoft.ServiceBus/namespaces is absent from the allow-list, so deployServiceBus must be false here.",
+    "Microsoft.Web/serverFarms is restricted to B1/B2/S1, so the Functions host uses a B1 plan instead of Y1 consumption.",
+    "Allowed locations: eastus, eastus2, centralus, Sweden Central, westus2, global."
+  ],
+  "parameters": {
+    "environment": { "value": "dev" },
+    "location": { "value": "westus2" },
+    "projectPrefix": { "value": "arc" },
+    "defaultRunMode": { "value": "Shadow" },
+    "existingCosmosAccountName": { "value": "arc-dev-cosmos-subhash" },
+    "enableCosmosVectorDocuments": { "value": false },
+    "deploySql": { "value": true },
+    "deployFunctions": { "value": true },
+    "deployApi": { "value": true },
+    "deployServiceBus": { "value": false },
+    "sqlDatabaseSku": { "value": "Basic" },
+    "legalBlobRetentionDays": { "value": 2920 },
+    "legalBlobWormEnabled": { "value": true },
+    "apiContainerImage": { "value": "mcr.microsoft.com/dotnet/aspnet:9.0" },
+    "apiCpuCores": { "value": "0.5" },
+    "apiMemory": { "value": "1.0Gi" },
+    "tags": {
+      "value": {
+        "Project": "ARC",
+        "Environment": "dev",
+        "ManagedBy": "Bicep",
+        "Phase": "13B"
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+@page
+@attribute [Microsoft.AspNetCore.Mvc.IgnoreAntiforgeryToken]
+@model DevDemoModel
+@{
+    ViewData["Title"] = "ARC Workflow Demo";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="arc-app arc-app-dev">
+    <aside class="arc-rail" aria-label="Navigation">
+        <div class="arc-rail-brand" title="ARC Recovery Assistant">ARC</div>
+        <a href="/" class="arc-rail-btn" title="Back to Chat">
+            <i class="bi bi-chat-dots"></i>
+            <span>Chat</span>
+        </a>
+        <a href="/DevDemo" class="arc-rail-btn active" title="Workflow demo">
+            <i class="bi bi-gear"></i>
+            <span>Demo</span>
+        </a>
+    </aside>
+
+    <main class="arc-main">
+        <header class="arc-header">
+            <div class="arc-header-info">
+                <h1 class="arc-header-title">Workflow Demo</h1>
+                <p class="arc-header-subtitle">S1–S9 shadow scenarios (developer only)</p>
+            </div>
+            <div class="arc-header-actions">
+                <span class="arc-shadow-badge">SHADOW</span>
+            </div>
+        </header>
+
+        <div class="arc-dev-content">
+            <p class="arc-dev-note">These scenarios exercise A1–A8 workflow orchestration in shadow mode. They are separate from Business Chat.</p>
+            <div class="scenario-grid">
+                @foreach (var scenario in ARC.Web.Models.ScenarioMetadata.All)
+                {
+                    <button type="button" class="scenario-card" onclick="startScenario('@scenario.Id')">
+                        <div class="scenario-title">@scenario.Title</div>
+                        <div class="scenario-id">@scenario.Id</div>
+                        <div class="scenario-desc">@scenario.Description</div>
+                    </button>
+                }
+            </div>
+            <div class="arc-messages arc-messages-dev" id="chatMessages"></div>
+        </div>
+    </main>
+</div>
+
+<script src="~/js/dev-workflows.js" asp-append-version="true"></script>

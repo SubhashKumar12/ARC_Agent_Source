@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+
+  <ItemGroup>
+
+    <ProjectReference Include="..\ARC.Domain\ARC.Domain.csproj" />
+
+    <ProjectReference Include="..\ARC.Data\ARC.Data.csproj" />
+
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+
+    <PackageReference Include="Azure.AI.DocumentIntelligence" Version="1.0.0" />
+
+    <PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
+
+    <PackageReference Include="Azure.Identity" Version="1.14.2" />
+
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
+
+    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.8" />
+
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8" />
+
+  </ItemGroup>
+
+
+
+  <PropertyGroup>
+
+    <TargetFramework>net9.0</TargetFramework>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <Nullable>enable</Nullable>
+
+  </PropertyGroup>
+
+
+
+</Project>
+

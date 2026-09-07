@@ -1,0 +1,292 @@
+@page
+@attribute [Microsoft.AspNetCore.Mvc.IgnoreAntiforgeryToken]
+@model IndexModel
+@{
+    ViewData["Title"] = "ARC Recovery Assistant";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARC Recovery Assistant</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/recovery-copilot.css" asp-append-version="true" />
+</head>
+<body>
+@Html.AntiForgeryToken()
+
+<svg class="arc-logo-defs" aria-hidden="true" width="0" height="0">
+    <defs>
+        <linearGradient id="arcGradLeft" x1="8" y1="8" x2="28" y2="42" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#93C5FD"/>
+            <stop offset="1" stop-color="#2563EB"/>
+        </linearGradient>
+        <linearGradient id="arcGradRight" x1="20" y1="8" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#60A5FA"/>
+            <stop offset="1" stop-color="#1D4ED8"/>
+        </linearGradient>
+        <linearGradient id="arcGradBar" x1="14" y1="30" x2="34" y2="36" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#3B82F6"/>
+            <stop offset="1" stop-color="#1E40AF"/>
+        </linearGradient>
+        <symbol id="arc-logo" viewBox="0 0 48 48">
+            <path d="M6 42L24 6L24 20.5L12.5 42H6Z" fill="url(#arcGradLeft)"/>
+            <path d="M42 42H35.5L24 20.5L24 6L42 42Z" fill="url(#arcGradRight)"/>
+            <path d="M14.5 30.5H33.5L31.8 35.8H16.2L14.5 30.5Z" fill="url(#arcGradBar)"/>
+        </symbol>
+    </defs>
+</svg>
+
+<div class="arc-shell" data-api-base="@Model.ApiBaseUrl">
+    <aside class="arc-sidebar arc-rail" aria-label="Main navigation">
+        <div class="arc-sidebar-brand">
+            <div class="arc-logo-box arc-logo-box-sidebar" aria-hidden="true">
+                <svg class="arc-logo arc-logo-sidebar" viewBox="0 0 48 48" width="52" height="52"><use href="#arc-logo"/></svg>
+            </div>
+            <div class="arc-brand-text">
+                <span class="arc-brand-title">ARC</span>
+                <span class="arc-brand-sub">Recovery Copilot</span>
+            </div>
+        </div>
+
+        <nav class="arc-nav" aria-label="Product navigation">
+            <a href="/" class="arc-nav-item active" aria-current="page">
+                <i class="bi bi-chat-dots" aria-hidden="true"></i>
+                <span>Recovery Assistant</span>
+            </a>
+            <span class="arc-nav-item disabled" title="Not included in evaluator build">
+                <i class="bi bi-building" aria-hidden="true"></i>
+                <span>Dealer Overview</span>
+            </span>
+            <span class="arc-nav-item disabled" title="Not included in evaluator build">
+                <i class="bi bi-graph-up" aria-hidden="true"></i>
+                <span>Recovery Insights</span>
+            </span>
+            <span class="arc-nav-item disabled" title="Not included in evaluator build">
+                <i class="bi bi-diagram-3" aria-hidden="true"></i>
+                <span>Workflow Monitor</span>
+            </span>
+            <span class="arc-nav-item disabled" title="Not included in evaluator build">
+                <i class="bi bi-folder2-open" aria-hidden="true"></i>
+                <span>Evidence</span>
+            </span>
+            <span class="arc-nav-item disabled" title="Not included in evaluator build">
+                <i class="bi bi-file-earmark-bar-graph" aria-hidden="true"></i>
+                <span>Reports</span>
+            </span>
+            <span class="arc-nav-item disabled" title="Not included in evaluator build">
+                <i class="bi bi-gear" aria-hidden="true"></i>
+                <span>Settings</span>
+            </span>
+        </nav>
+
+        <div class="arc-shadow-card">
+            <i class="bi bi-shield-check" aria-hidden="true"></i>
+            <div>
+                <strong>Shadow Mode</strong>
+                <p>Safe evaluation mode<br />No live legal/financial actions</p>
+            </div>
+        </div>
+
+        <footer class="arc-sidebar-footer">
+            <div class="arc-sidebar-sep"></div>
+            <p>ARC &mdash; Agentic Receivables Recovery</p>
+            <p class="arc-muted">Evaluation build &bull; Shadow mode</p>
+        </footer>
+    </aside>
+
+    <div class="arc-center">
+        <header class="arc-topbar">
+            <div class="arc-topbar-left">
+                <div class="arc-logo-box arc-logo-box-header" aria-hidden="true">
+                    <svg class="arc-logo arc-logo-header" viewBox="0 0 48 48" width="46" height="46"><use href="#arc-logo"/></svg>
+                </div>
+                <div class="arc-topbar-brand">
+                    <h1 class="arc-topbar-title">ARC Recovery Assistant</h1>
+                    <p class="arc-topbar-sub">Receivables Recovery &amp; Section 138 Intelligence</p>
+                </div>
+            </div>
+            <div class="arc-topbar-right">
+                <span class="arc-pill arc-pill-shadow" title="Shadow mode &mdash; no live outbound actions">
+                    <i class="bi bi-check2"></i> SHADOW MODE
+                </span>
+                <span class="arc-api-status" id="apiStatus" aria-live="polite">
+                    <span class="arc-status-dot" id="apiStatusDot"></span>
+                    <span id="apiStatusText">Checking API&hellip;</span>
+                </span>
+                <button type="button" class="arc-icon-btn" aria-label="Search" disabled title="Search (not available)">
+                    <i class="bi bi-search"></i>
+                </button>
+                <button type="button" class="arc-btn-primary" onclick="newConversation()" aria-label="Start new conversation">
+                    <i class="bi bi-plus-lg"></i> New Conversation
+                </button>
+                <button type="button" class="arc-icon-btn arc-notify-btn" aria-label="Notifications" disabled title="Notifications (not available)">
+                    <i class="bi bi-bell"></i>
+                </button>
+                <div class="arc-user-block" aria-label="User">
+                    <div class="arc-user-avatar">U</div>
+                    <div>
+                        <div class="arc-user-name">User</div>
+                        <div class="arc-user-meta">Evaluation Build</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="arc-chat-scroll" id="chatScroll">
+            <div id="welcomeHero" class="arc-welcome">
+                <div class="arc-welcome-inner">
+                    <div class="arc-welcome-shapes" aria-hidden="true">
+                        <span class="arc-shape arc-shape-1"></span>
+                        <span class="arc-shape arc-shape-2"></span>
+                        <span class="arc-shape arc-shape-3"></span>
+                    </div>
+                    <div class="arc-welcome-layout">
+                        <div class="arc-welcome-content">
+                            <p class="arc-welcome-greet" id="welcomeGreeting"></p>
+                            <h2 class="arc-welcome-headline">How can I help with recovery today?</h2>
+                            <p class="arc-welcome-sub">Ask about dealer outstanding, ageing, notices, visits and recovery status.</p>
+
+                            <div class="arc-quick-grid" role="toolbar" aria-label="Quick actions">
+                                <button type="button" class="arc-quick-card arc-chip" data-prompt="Show dealer 115014 in depot 020">
+                                    <span class="arc-quick-icon accent-blue"><i class="bi bi-building"></i></span>
+                                    <div class="arc-quick-text">
+                                        <strong>Dealer Overview</strong>
+                                        <span>View dealer profile and mapped depot</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right arc-quick-chevron"></i>
+                                </button>
+                                <button type="button" class="arc-quick-card arc-chip" data-prompt="Show outstanding details">
+                                    <span class="arc-quick-icon accent-purple"><i class="bi bi-bar-chart-line"></i></span>
+                                    <div class="arc-quick-text">
+                                        <strong>Outstanding Analysis</strong>
+                                        <span>Check current outstanding, ageing and &gt;90 exposure</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right arc-quick-chevron"></i>
+                                </button>
+                                <button type="button" class="arc-quick-card arc-chip" data-prompt="Show notice and recovery status">
+                                    <span class="arc-quick-icon accent-orange"><i class="bi bi-file-earmark-text"></i></span>
+                                    <div class="arc-quick-text">
+                                        <strong>Recovery Status</strong>
+                                        <span>Check notice, legal and recovery status</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right arc-quick-chevron"></i>
+                                </button>
+                                <button type="button" class="arc-quick-card arc-chip" data-prompt="Show TSI visit status and count">
+                                    <span class="arc-quick-icon accent-green"><i class="bi bi-clipboard-check"></i></span>
+                                    <div class="arc-quick-text">
+                                        <strong>Field Activity</strong>
+                                        <span>Check TSI visit status and follow-up</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right arc-quick-chevron"></i>
+                                </button>
+                            </div>
+
+                            <div class="arc-try-wrap">
+                                <button type="button" class="arc-try-prompt arc-chip" data-prompt="Show dealer 115014 in depot 020">
+                                    <span aria-hidden="true">&#128161;</span> Try: <strong>Show dealer 115014 in depot 020</strong>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="arc-welcome-aside" aria-hidden="true">
+                            <div class="arc-welcome-taglines">
+                                <span>Smarter</span>
+                                <span>Recoveries</span>
+                                <span class="arc-tagline-muted">Safer Decisions</span>
+                                <span class="arc-tagline-muted">Stronger Relationships</span>
+                            </div>
+                            <div class="arc-logo-box arc-logo-box-watermark">
+                                <svg class="arc-logo arc-logo-watermark" viewBox="0 0 48 48" width="140" height="140"><use href="#arc-logo"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arc-messages" id="chatMessages" aria-live="polite" aria-label="Chat messages"></div>
+
+            <div id="chatLoading" class="arc-typing-row d-none" aria-live="polite" aria-busy="true">
+                <div class="arc-assistant-avatar" aria-hidden="true"><span class="arc-assistant-avatar-inner"><svg class="arc-logo arc-logo-avatar" viewBox="0 0 48 48" width="28" height="28"><use href="#arc-logo"/></svg></span></div>
+                <div class="arc-typing-bubble">
+                    <span id="typingPhrase">ARC is reviewing the available business data</span>
+                    <span class="arc-typing-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                </div>
+            </div>
+        </div>
+
+        <footer class="arc-composer">
+            <div class="arc-composer-card">
+                <button type="button" class="arc-attach-btn" aria-label="Attach file" disabled title="Attachments not supported">
+                    <i class="bi bi-paperclip"></i>
+                </button>
+                <textarea id="messageInput"
+                          class="arc-input"
+                          rows="1"
+                          placeholder="Ask ARC about a dealer, outstanding, notice or field activity..."
+                          aria-label="Message"></textarea>
+                <button type="button" class="arc-send-btn" onclick="sendMessage()" aria-label="Send message">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </div>
+            <div class="arc-composer-meta">
+                <span>ARC uses governed business data. Legal and financial decisions remain human-controlled.</span>
+                <span>Shift + Enter for new line</span>
+            </div>
+        </footer>
+    </div>
+
+    <aside class="arc-context-panel" aria-label="Context and help">
+        <section class="arc-panel-card arc-context-card">
+            <div class="arc-panel-header">
+                <h2>Current Context</h2>
+                <button type="button" class="arc-link-btn" onclick="clearContext()" aria-label="Clear context">Clear</button>
+            </div>
+            <dl class="arc-context-list">
+                <div class="arc-context-row"><dt><i class="bi bi-building"></i> Dealer</dt><dd id="ctxDealer"><span class="arc-muted">Not selected</span></dd></div>
+                <div class="arc-context-row"><dt><i class="bi bi-geo-alt"></i> Depot</dt><dd id="ctxDepot"><span class="arc-muted">Not selected</span></dd></div>
+                <div class="arc-context-row"><dt><i class="bi bi-calendar3"></i> Period</dt><dd id="ctxPeriod">Current session</dd></div>
+                <div class="arc-context-row"><dt><i class="bi bi-chat-left-text"></i> Last Topic</dt><dd id="ctxTopic">&mdash;</dd></div>
+                <div class="arc-context-row"><dt><i class="bi bi-shield-check"></i> Mode</dt><dd id="ctxMode">Shadow</dd></div>
+            </dl>
+        </section>
+
+        <section class="arc-panel-card arc-safety-card">
+            <div class="arc-panel-header arc-safety-header">
+                <h2>Demo Safety</h2>
+                <i class="bi bi-shield-check arc-safety-shield" aria-hidden="true"></i>
+            </div>
+            <ul class="arc-safety-list">
+                <li><i class="bi bi-check-circle-fill"></i> Shadow outbound (no live actions)</li>
+                <li><i class="bi bi-check-circle-fill"></i> Human approvals required</li>
+                <li><i class="bi bi-check-circle-fill"></i> Governed data access</li>
+                <li><i class="bi bi-check-circle-fill"></i> No autonomous legal authorization</li>
+            </ul>
+        </section>
+
+        <section class="arc-panel-card arc-examples-card">
+            <div class="arc-panel-header">
+                <h2>Helpful Examples</h2>
+                <span class="arc-link-btn arc-link-muted" aria-hidden="true">View all</span>
+            </div>
+            <ul class="arc-examples-list" role="list">
+                <li><button type="button" class="arc-example-row arc-chip" data-prompt="Show dealer 115014 in depot 020"><i class="bi bi-building"></i><span>Show dealer 115014 in depot 020</span><i class="bi bi-chevron-right"></i></button></li>
+                <li><button type="button" class="arc-example-row arc-chip" data-prompt="Show outstanding details"><i class="bi bi-currency-rupee"></i><span>Show outstanding details</span><i class="bi bi-chevron-right"></i></button></li>
+                <li><button type="button" class="arc-example-row arc-chip" data-prompt="Show ageing and over 90 outstanding"><i class="bi bi-hourglass-split"></i><span>Show ageing and over 90 outstanding</span><i class="bi bi-chevron-right"></i></button></li>
+                <li><button type="button" class="arc-example-row arc-chip" data-prompt="Show notice and recovery status"><i class="bi bi-file-earmark-text"></i><span>Show notice and recovery status</span><i class="bi bi-chevron-right"></i></button></li>
+                <li><button type="button" class="arc-example-row arc-chip" data-prompt="Show TSI visit status and count"><i class="bi bi-geo-alt"></i><span>Show TSI visit status and count</span><i class="bi bi-chevron-right"></i></button></li>
+                <li><button type="button" class="arc-example-row arc-chip" data-prompt="What is net recoverable exposure?"><i class="bi bi-info-circle"></i><span>What is net recoverable exposure?</span><i class="bi bi-chevron-right"></i></button></li>
+            </ul>
+        </section>
+    </aside>
+
+    <button type="button" class="arc-mobile-context-toggle" id="contextToggle" aria-label="Toggle context panel">
+        <i class="bi bi-layout-sidebar-inset-reverse"></i>
+    </button>
+</div>
+
+<script src="~/js/arc-logo.js" asp-append-version="true"></script>
+<script src="~/js/chat.js" asp-append-version="true"></script>
+</body>
+</html>
