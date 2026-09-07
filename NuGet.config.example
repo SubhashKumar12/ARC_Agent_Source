@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copy to NuGet.config for local restore. Do NOT add passwords here.
+  Authenticate via machine/user NuGet.Config or environment:
+
+    dotnet nuget add source https://nuget.pkg.github.com/MCCITGIT/index.json ^
+      --name MCCITGIT --username YOUR_GITHUB_USER --password YOUR_PAT ^
+      --store-password-in-clear-text
+
+  See docs/TEAMMATE_SETUP.md
+-->
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+    <add key="MCCITGIT" value="https://nuget.pkg.github.com/MCCITGIT/index.json" />
+  </packageSources>
+</configuration>

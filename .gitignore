@@ -5,6 +5,10 @@ obj/
 *.suo
 appsettings.*.local.json
 secrets.json
+# Local NuGet credential overrides (never commit PATs or passwords)
+NuGet.config.local
+nuget.config.local
+**/NuGet.Config.user
 .idea/
 *.nupkg
 TestResults/
